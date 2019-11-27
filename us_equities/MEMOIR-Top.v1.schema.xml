@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    package="com.memx.us_equities.memoir.top.v1"
+    id="3"
+    version="1"
+    semanticVersion="1.0.0"
+    description="MEMOIR (Members Orders Information Record) Message Schema"
+    byteOrder="bigEndian">
+
+    <xi:include href="MEMOIR.common.include.xml"/>
+
+    <types>
+        <type name="dummyType3" primitiveType="char" description="needed to complete the required 'types' block"/>
+    </types>
+
+    <!-- Include the common messages -->
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/2)"/>
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/3)"/>
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/4)"/>
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/5)"/>
+
+    <sbe:message name="BestBidOffer" id="10" description="Full Top Of Book Message">
+        <field name="Timestamp"  id="52"    type="UTCTimestampNanosType"    semanticType="Time"     description="Time the message was generated."/>
+        <field name="SecurityID" id="48"    type="SecurityIDType"           semanticType="Integer"  description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="BidSize"    id="134"   type="LongQtyType"              semanticType="Quantity" description="Best Bid Size"/>
+        <field name="BidPrice"   id="132"   type="LongPriceType"            semanticType="Price"    description="Best Bid Price"/>
+        <field name="OfferSize"  id="135"   type="LongQtyType"              semanticType="Quantity" description="Best Offer Size"/>
+        <field name="OfferPrice" id="133"   type="LongPriceType"            semanticType="Price"    description="Best Offer Price"/>
+    </sbe:message>
+
+    <sbe:message name="BestBid" id="11" description="Best Bid Message Long Form">
+        <field name="Timestamp"     id="52"  type="UTCTimestampNanosType" semanticType="Time"       description="Time the message was generated."/>
+        <field name="SecurityID"    id="48"  type="SecurityIDType"        semanticType="Integer"    description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="BidSize"       id="134" type="LongQtyType"           semanticType="Quantity"   description="Best Bid Size"/>
+        <field name="BidPrice"      id="132" type="LongPriceType"         semanticType="Price"      description="Best Bid Price"/>
+    </sbe:message>
+
+    <sbe:message name="BestBidShort" id="13" description="Best Bid Message Short Form">
+        <field name="Timestamp"     id="52"  type="UTCTimestampNanosType"   semanticType="Time"     description="Time the message was generated."/>
+        <field name="SecurityID"    id="48"  type="SecurityIDType"          semanticType="Integer"  description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="BidSize"       id="134" type="ShortQtyType"            semanticType="Quantity" description="Best Bid Size"/>
+        <field name="BidPrice"      id="132" type="ShortPriceType"          semanticType="Price"    description="Best Bid Price"/>
+    </sbe:message>
+
+    <sbe:message name="BestOffer" id="12" description="Best Offer Message Long Form">
+        <field name="Timestamp"     id="52"  type="UTCTimestampNanosType" semanticType="Time"       description="Time the message was generated."/>
+        <field name="SecurityID"    id="48"  type="SecurityIDType"        semanticType="Integer"    description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="OfferSize"     id="135" type="LongQtyType"           semanticType="Quantity"   description="Best Offer Size"/>
+        <field name="OfferPrice"    id="133" type="LongPriceType"         semanticType="Price"      description="Best Offer Price"/>
+    </sbe:message>
+
+    <sbe:message name="BestOfferShort" id="14" description="Best Offer Message Short Form">
+        <field name="Timestamp"     id="52"  type="UTCTimestampNanosType"   semanticType="Time"     description="Time the message was generated."/>
+        <field name="SecurityID"    id="48"  type="SecurityIDType"          semanticType="Integer"  description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="OfferSize"     id="135" type="ShortQtyType"            semanticType="Quantity" description="Best Offer Size"/>
+        <field name="OfferPrice"    id="133" type="ShortPriceType"          semanticType="Price"    description="Best Offer Price"/>
+    </sbe:message>
+
+    <sbe:message name="ClearBook" id="15" description="In the event that there are operational issues on the MEMX book, in order to quickly reset the book a Clear Book message will be sent.">
+        <field name="Timestamp"     id="52"     type="UTCTimestampNanosType"    semanticType="Time"     description="Time the message was generated."/>
+        <field name="SecurityID"    id="48"     type="SecurityIDType"           semanticType="Integer"  description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+    </sbe:message>
+
+</sbe:messageSchema>

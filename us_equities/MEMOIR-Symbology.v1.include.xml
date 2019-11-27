@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Common Symbology data for all MEMOIR schemas, will be included via xinclude
+-->
+<sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        package="com.memx.us_equities.memoir.symbology.v1"
+        id="88"
+        version="1"
+        semanticVersion="1.0.0"
+        description="MEMOIR (Members Orders Information Record) Symbology Message Schema"
+        byteOrder="bigEndian">
+
+    <xi:include href="MEMOIR.common.include.xml"/>
+
+    <sbe:message name="InstrumentDirectory" id="1" description="Instrument directory message">
+        <field name="Timestamp" id="52" type="UTCTimestampNanosType" semanticType="Time" description="Time the message was generated."/>
+        <field name="SecurityID"           id="48"   type="SecurityIDType"   semanticType="Integer" description="Unique code identifying the instrument in any messages going forward"/>
+        <field name="Symbol"               id="55"   type="SymbolType"       semanticType="String"  description="CMS symbol tradable instrument"/>
+        <field name="SymbolSfx"            id="65"   type="SuffixType"       semanticType="String"  description="CMS suffix for the tradable instrument"/>
+        <field name="RoundLot"             id="561"  type="RoundLotType"     semanticType="Integer" description="Number of shares that represent a round lot for the instrument"/>
+        <field name="ShortSaleRestriction" id="8000" type="BooleanType"      semanticType="Integer" description="Short Sale Restricted flag"/>
+        <field name="IsTestSymbol"         id="8001" type="BooleanType"      semanticType="Boolean" description="Is this symbol for test?"/>
+        <field name="MPV"                  id="8003" type="LongPriceType"    semanticType="Price"   description="Minimum price variation for a stock"/>
+    </sbe:message>
+
+    <sbe:message name="RegShoRestriction" id="2" description="Stock RegSHO restriction status">
+        <field name="Timestamp" id="52" type="UTCTimestampNanosType" semanticType="Time" description="Time the message was generated."/>
+        <field name="SecurityID"           id="48" type="SecurityIDType"   semanticType="Integer" description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="ShortSaleRestriction" id="8000" type="BooleanType"    semanticType="Boolean" description="Sell short restriction enabled"/>
+    </sbe:message>
+
+    <sbe:message name="SecurityTradingStatus" id="3" description="Stock symbol action message">
+        <field name="Timestamp" id="52" type="UTCTimestampNanosType" semanticType="Time" description="Time the message was generated."/>
+        <field name="SecurityID"            id="48"  type="SecurityIDType"            semanticType="Integer" description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="SecurityTradingStatus" id="326" type="SecurityTradingStatusType" semanticType="Char" description="Current stock trading state"/>
+        <field name="SecurityTradingStatusReason" id="30" type="SecurityTradingStatusReasonType" semanticType="Char" description="Reason for the security status"/>
+    </sbe:message>
+
+    <sbe:message name="SnapshotComplete" id="4" description="SnapshotComplete">
+        <field name="Timestamp"          id="52"    type="UTCTimestampNanosType" semanticType="Time"    description="Time the message was generated."/>
+        <field name="AsOfSequenceNumber" id="1"     type="LongType"              semanticType="Long"    description="As of sequence number seen when this snapshot is completed"/>
+    </sbe:message>
+
+</sbe:messageSchema>

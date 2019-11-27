@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sbe:messageSchema xmlns:sbe="http://fixprotocol.io/2016/sbe"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    package="com.memx.us_equities.memoir.lastsale.v1"
+    id="4"
+    version="1"
+    semanticVersion="1.0.0"
+    description="MEMOIR (Members Orders Information Record) Last Sale Message Schema)"
+    byteOrder="bigEndian">
+
+    <xi:include href="MEMOIR.common.include.xml"/>
+
+    <types>
+
+        <set name="SaleConditionType" encodingType="uint8" description="Bit flag that will describe the sale conditions on the trade">
+            <choice name="IntermarketSweep">0</choice>
+            <choice name="ExtendedHours">1</choice>
+            <choice name="OddLot">2</choice>
+            <choice name="TradeThroughExempt">3</choice>
+        </set>
+
+        <enum name="SCSettlementType" encodingType="AlphaEncodingType"
+          description="Settlement type will be a regular trade, but will correspond.">
+            <validValue name="RegulatTrade">@</validValue>
+        </enum>
+
+        <enum name="SCTradeThroughExemptionType" encodingType="AlphaEncodingType">
+            <validValue name="IntermarketSweep">F</validValue>
+            <validValue name="OpeningPrints">O</validValue>
+            <validValue name="ReopeningPrints">5</validValue>
+            <validValue name="ClosingPrints">6</validValue>
+            <validValue name="NotApplicable"> </validValue>
+        </enum>
+
+        <enum name="SCExtendedHoursOrSoldType" encodingType="AlphaEncodingType">
+            <validValue name="FormT">T</validValue>
+            <validValue name="NotApplicable"> </validValue>
+        </enum>
+
+        <enum name="SCSROTradeDetailType" encodingType="AlphaEncodingType">
+            <validValue name="PriceVariationTrade">H</validValue>
+            <validValue name="OddLotTrade">I</validValue>
+            <validValue name="CrossTrade">X</validValue>
+            <validValue name="NotApplicable"> </validValue>
+        </enum>
+    </types>
+
+    <!-- Include the common symbology messages -->
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/2)"/>
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/3)"/>
+    <xi:include href="MEMOIR-Symbology.v1.include.xml" xpointer="element(/1/4)"/>
+
+    <sbe:message name="TradeReport"  id="10" description="Trade Report Message">
+        <field name="Timestamp"      id="52"    type="UTCTimestampNanosType"       semanticType="Time"      description="Time the message was generated."/>
+        <field name="SecurityID"     id="48"    type="SecurityIDType"              semanticType="Integer"   description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="TradeID"        id="17"    type="IDType"                      semanticType="Long"      description="Unique identifier of execution message"/>
+        <field name="TradeQty"       id="1843"  type="LongQtyType"                 semanticType="Quantity"  description="Trade Quantity"/>
+        <field name="LastPrice"      id="31"    type="LongPriceType"               semanticType="Price"     description="Trade Price"/>
+        <field name="SaleCondition1" id="277"   type="SCSettlementType"            semanticType="Char"      description="Trade sale condition"/>
+        <field name="SaleCondition2" id="278"   type="SCTradeThroughExemptionType" semanticType="Char"      description="Trade sale condition"/>
+        <field name="SaleCondition3" id="279"   type="SCExtendedHoursOrSoldType"   semanticType="Char"      description="Trade sale condition"/>
+        <field name="SaleCondition4" id="280"   type="SCSROTradeDetailType"        semanticType="Char"      description="Trade sale condition"/>
+    </sbe:message>
+
+    <sbe:message name="TradeCancel" id="11" description="Trade Cancel Message">
+        <field name="Timestamp"      id="52"    type="UTCTimestampNanosType"        semanticType="Time"     description="Time the message was generated."/>
+        <field name="SecurityID"     id="48"    type="SecurityIDType"               semanticType="Integer"  description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="TradeID"        id="17"    type="IDType"                       semanticType="Long"     description="Unique identifier of execution message"/>
+        <field name="TradeQty"       id="1843"  type="LongQtyType"                  semanticType="Quantity" description="Trade Quantity"/>
+        <field name="LastPrice"      id="31"    type="LongPriceType"                semanticType="Price"    description="Trade Price"/>
+        <field name="SaleCondition1" id="277"   type="SCSettlementType"             semanticType="Char"     description="Trade sale condition"/>
+        <field name="SaleCondition2" id="278"   type="SCTradeThroughExemptionType"  semanticType="Char"     description="Trade sale condition"/>
+        <field name="SaleCondition3" id="279"   type="SCExtendedHoursOrSoldType"    semanticType="Char"     description="Trade sale condition"/>
+        <field name="SaleCondition4" id="280"   type="SCSROTradeDetailType"         semanticType="Char"     description="Trade sale condition"/>
+    </sbe:message>
+
+    <sbe:message name="TradeCorrect" id="12" description="Trade Correct Message">
+        <field name="Timestamp"               id="52"   type="UTCTimestampNanosType"        semanticType="Time"     description="Time the message was generated."/>
+        <field name="SecurityID"              id="48"   type="SecurityIDType"               semanticType="Integer"  description="Instrument code uniquely identifying the security from the Instrument Directory"/>
+        <field name="TradeID"                 id="17"   type="IDType"                       semanticType="Long"     description="Unique identifier of execution message"/>
+        <field name="OriginalTradeQty"        id="1843" type="LongQtyType"                  semanticType="Quantity" description="Original Trade Quantity"/>
+        <field name="OriginalTradePrice"      id="31"   type="LongPriceType"                semanticType="Price"    description="Original Trade Price"/>
+        <field name="OriginalSaleCondition1"  id="277"  type="SCSettlementType"             semanticType="Char"     description="Trade sale condition"/>
+        <field name="OriginalSaleCondition2"  id="278"  type="SCTradeThroughExemptionType"  semanticType="Char"     description="Trade sale condition"/>
+        <field name="OriginalSaleCondition3"  id="279"  type="SCExtendedHoursOrSoldType"    semanticType="Char"     description="Trade sale condition"/>
+        <field name="OriginalSaleCondition4"  id="280"  type="SCSROTradeDetailType"         semanticType="Char"     description="Trade sale condition"/>
+        <field name="CorrectedTradeQty"       id="58"   type="LongQtyType"                  semanticType="Quantity" description="Corrected Trade Quantity"/>
+        <field name="CorrectedTradePrice"     id="54"   type="LongPriceType"                semanticType="Price"    description="Corrected Trade Price"/>
+        <field name="CorrectedSaleCondition1" id="281"  type="SCSettlementType"             semanticType="Char"     description="Trade sale condition"/>
+        <field name="CorrectedSaleCondition2" id="282"  type="SCTradeThroughExemptionType"  semanticType="Char"     description="Trade sale condition"/>
+        <field name="CorrectedSaleCondition3" id="283"  type="SCExtendedHoursOrSoldType"    semanticType="Char"     description="Trade sale condition"/>
+        <field name="CorrectedSaleCondition4" id="284"  type="SCSROTradeDetailType"         semanticType="Char"     description="Trade sale condition"/>
+    </sbe:message>
+
+</sbe:messageSchema>

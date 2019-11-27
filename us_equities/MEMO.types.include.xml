@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<types>
+
+    <type name="NumericEncodingType" primitiveType="uint8"
+        description="Enumerated values encoded with numeric values."/>
+
+    <type name="AlphaEncodingType" primitiveType="char"
+        description="Enumerated values encoded with alpha values."/>
+
+    <type name="ClOrdIdType"
+        primitiveType="char"
+        length="16"
+        description="Unique identifier for an Order as assigned by the customer. Uniqueness must be guaranteed within a single trading day for any specific account."/>
+
+    <type name="SymbolNameType" primitiveType="char" length="6"
+        description="Common human understood representation of the security."/>
+
+    <type name="SymbolSfxType" primitiveType="char" length="6"
+        description="Additional information about the security (e.g. preferred, warrants, etc.)."/>
+
+    <type name="QtyType" primitiveType="uint32" description="Number of shares."/>
+
+    <type name="LocateRequiredType" primitiveType="char"/>
+
+    <type name="GroupId" primitiveType="uint16" description="Unique identifier of custom group."/>
+
+    <type name="ExchangeOrdIdType" primitiveType="int64" description="Unique identifier for Order as assigned by exchange."/>
+
+    <type name="ExecutionIdType" primitiveType="char" length="12"/>
+
+    <type name="AccountType" primitiveType="char" length="32"/>
+
+    <!-- enums -->
+
+    <enum name="SideType" encodingType="NumericEncodingType" description="Defines the side of an order.">
+        <validValue name="Buy">1</validValue>
+        <validValue name="Sell">2</validValue>
+        <validValue name="SellShort">3</validValue>
+        <validValue name="SellShortExempt">4</validValue>
+    </enum>
+
+    <enum name="OrdType" encodingType="NumericEncodingType" description="Indicates the type of an order.">
+        <validValue name="Market">1</validValue>
+        <validValue name="Limit">2</validValue>
+        <validValue name="Pegged">3</validValue>
+    </enum>
+
+    <!-- Add a note that GoodTillDate is more like good til time... -->
+    <enum name="TimeInForceType" encodingType="NumericEncodingType"
+        description="Defines the time during which an order is eligible for execution.">
+        <validValue name="Day" description="Cancelled at 4:00.">1</validValue>
+        <validValue name="ImmediateOrCancel">2</validValue>
+        <validValue name="FillOrKill">3</validValue>
+        <validValue name="GoodForTime"
+            description="need field 126 (optional) with this TIF cancel all GTT at 8:00 if not already expired.">4</validValue>
+        <validValue name="RegularHoursOnly" description="Good from 9:30 until 4:00.">5</validValue>
+    </enum>
+
+    <enum name="OrderCapacityType" encodingType="NumericEncodingType"
+        description="Designates the capacity of the firm placing the order.">
+        <validValue name="Agency">1</validValue>
+        <validValue name="Principal">2</validValue>
+        <validValue name="RisklessPrincipal">3</validValue>
+    </enum>
+
+    <enum name="OrdStatusType" encodingType="NumericEncodingType" description="Indicates the status of an order.">
+        <validValue name="New">1</validValue>
+        <validValue name="PartialFilled">2</validValue>
+        <validValue name="Filled">3</validValue>
+        <validValue name="Canceled">4</validValue>
+        <validValue name="PendingCancel">5</validValue>
+        <validValue name="Rejected">6</validValue>
+        <validValue name="PendingNew">7</validValue>
+        <validValue name="PendingReplace">8</validValue>
+    </enum>
+
+    <enum name="CxlRejResponseToType" encodingType="NumericEncodingType"
+        description="Identifies the request type that a cancel reject was issued for.">
+        <validValue name="OrderCancelRequest">1</validValue>
+        <validValue name="OrderCancelReplaceRequest">2</validValue>
+    </enum>
+
+    <enum name="ExecType" encodingType="NumericEncodingType"
+        description="Describes the type of event being reported in the execution report message..">
+        <validValue name="New">1</validValue>
+        <validValue name="Canceled">2</validValue>
+        <validValue name="Replaced">3</validValue>
+        <validValue name="PendingCancel">4</validValue>
+        <validValue name="Rejected">5</validValue>
+        <validValue name="PendingNew">6</validValue>
+        <validValue name="PendingReplace">7</validValue>
+        <validValue name="Trade">8</validValue>
+        <validValue name="TradeCorrect">9</validValue>
+        <validValue name="TradeCancel">10</validValue>
+        <validValue name="Restatement">11</validValue>
+    </enum>
+
+    <enum name="LastLiquidityIndType" encodingType="NumericEncodingType"
+        description="Indicates the liquidity code for this execution.">
+        <validValue name="AddDisplayed">1</validValue>
+        <validValue name="Removed">2</validValue>
+        <validValue name="Routed">3</validValue>
+        <validValue name="Cross">4</validValue>
+        <validValue name="AddHidden">5</validValue>
+        <validValue name="AddMidpointPeg">6</validValue>
+        <validValue name="AddDisplayedNbboImprove">7</validValue>
+    </enum>
+
+    <enum name="PegType" encodingType="NumericEncodingType"
+        description="Defines the type of peg used in a peg order.">
+        <validValue name="MidPricePeg">1</validValue>
+        <validValue name="PrimaryPeg">2</validValue>
+    </enum>
+
+    <enum name="DispMethodType" encodingType="NumericEncodingType"
+        description="Indicates the method used when refreshing displayed quantity..">
+        <validValue name="Initial">1</validValue>
+        <validValue name="RandomizeBySize">2</validValue>
+        <validValue name="RandomizeByTime">3</validValue>
+        <validValue name="RandomizeByTimeSize">4</validValue>
+        <validValue name="Undisclosed">5</validValue>
+    </enum>
+
+    <enum name="TimeUnitType" encodingType="NumericEncodingType"
+        description="Indicates type of time that is encoded.">
+        <validValue name="second">0</validValue>
+        <validValue name="millisecond">3</validValue>
+        <validValue name="microsecond">6</validValue>
+        <validValue name="nanosecond">9</validValue>
+    </enum>
+
+    <enum name="RepriceType" encodingType="NumericEncodingType" description="Defines the type of reprice used in order marked as price to comply with RegNMS rules">
+        <validValue name="SingleReprice">1</validValue>
+        <validValue name="ContinuousReprice">2</validValue>
+    </enum>
+
+    <enum name="SelfTradePreventionType" encodingType="NumericEncodingType" description="Defines the self trade operation which will be used if the exchange self-trade-prevention functionality is triggered on this order.">
+        <validValue name="CancelNewest">1</validValue>
+        <validValue name="CancelOldest">2</validValue>
+        <validValue name="DecrementAndCancel">3</validValue>
+        <validValue name="CancelBoth">4</validValue>
+        <validValue name="CancelSmallest">5</validValue>
+    </enum>
+
+    <enum name="CancelReasonCode" encodingType="NumericEncodingType" description="CancelReasonCode represents the reason the order was canceled by the system.">
+        <validValue name="Other">0</validValue>
+        <validValue name="UserRequestedCancel">1</validValue>
+        <validValue name="ImmediateOrCancel">2</validValue>
+        <validValue name="FillOrKill">3</validValue>
+        <validValue name="EndOfTrading">4</validValue>
+        <validValue name="LimitUpLimitDown">5</validValue>
+        <validValue name="Halted">6</validValue>
+        <validValue name="ExchangeSupervisory">7</validValue>
+        <validValue name="OrderExpired">8</validValue>
+        <validValue name="PostOnlyLockOrCross">9</validValue>
+        <validValue name="SelfTradePrevention">10</validValue>
+        <validValue name="ParticipantDisconnect">11</validValue>
+    </enum>
+
+    <enum name="OrderRejectReasonCode" encodingType="NumericEncodingType" description="Identifies the reason why a new order or an order-replace was rejected by the system.">
+        <validValue name="Other">0</validValue>
+        <validValue name="UnknownSymbol">1</validValue>
+        <validValue name="ExchangeClosed">2</validValue>
+        <validValue name="OrderExceedsLimit">3</validValue>
+        <validValue name="TooLateToEnter">4</validValue>
+        <validValue name="DuplicateOrder">5</validValue>
+        <validValue name="UnsupportedOrderCharacteristic">6</validValue>
+        <validValue name="SurveillanceOption">7</validValue>
+        <validValue name="IncorrectQuantity">8</validValue>
+        <validValue name="PriceExceedsCurrentPriceBand">9</validValue>
+        <validValue name="InvalidPriceIncrement">10</validValue>
+        <validValue name="ReferencePriceNotAvailable">11</validValue>
+        <validValue name="NotionalValueExceedsThreshold">12</validValue>
+        <validValue name="ShortSellNotPermitted">13</validValue>
+        <validValue name="ExceededMaxNotionalOrderAmt">14</validValue>
+        <validValue name="InvalidDisplayMinInc">15</validValue>
+    </enum>
+
+    <enum name="CancelRejectReasonCode" encodingType="NumericEncodingType" description="Identifies the reason why an order cancellation request was rejected.">
+        <validValue name="Other">0</validValue>
+        <validValue name="UnknownSymbol">1</validValue>
+        <validValue name="ExchangeClosed">2</validValue>
+        <validValue name="OrderExceedsLimit">3</validValue>
+        <validValue name="TooLateToCancel">4</validValue>
+        <validValue name="DuplicateClOrdID">5</validValue>
+        <validValue name="UnknownOrder">6</validValue>
+        <validValue name="BrokerCredit">7</validValue>
+        <validValue name="UnableToProcessOrderMassCancelRequest">8</validValue>
+        <validValue name="SurveillanceOption">9</validValue>
+        <validValue name="IncorrectQuantity">10</validValue>
+        <validValue name="PriceExceedsCurrentPriceBand">11</validValue>
+        <validValue name="InvalidPriceIncrement">12</validValue>
+        <validValue name="NotionalValueExceedsThreshold">13</validValue>
+        <validValue name="ShortSellNotPermitted">14</validValue>
+        <validValue name="ExceededMaxNotionalOrderAmt">15</validValue>
+        <validValue name="UnexpectedSymbol">16</validValue>
+        <validValue name="UnexpectedSymbolSfx">17</validValue>
+        <validValue name="UnsupportedSideChange">18</validValue>
+        <validValue name="UnsupportedOrdTypeChange">19</validValue>
+    </enum>
+
+    <enum name="ExchangeCode" encodingType="AlphaEncodingType" description="Indicates the market that a routed order was executed on.">
+        <validValue name="MEMX">U</validValue>
+        <validValue name="Nasdaq">Q</validValue>
+        <validValue name="NasdaqBX">B</validValue>
+        <validValue name="NasdaqPSX">X</validValue>
+        <validValue name="NYSE">N</validValue>
+        <validValue name="ARCA">P</validValue>
+        <validValue name="NYSEAmerican">A</validValue>
+        <validValue name="NYSEChicago">M</validValue>
+        <validValue name="NYSENational">C</validValue>
+        <validValue name="EDGX">K</validValue>
+        <validValue name="EDGA">J</validValue>
+        <validValue name="BATS">Z</validValue>
+        <validValue name="BATSY">Y</validValue>
+        <validValue name="IEX">V</validValue>
+    </enum>
+
+    <enum name="TradingSessionIDType" encodingType="NumericEncodingType" description="Defines different trading session types.">
+        <validValue name="Day">1</validValue>
+        <validValue name="HalfDay">2</validValue>
+        <validValue name="Holiday">3</validValue>
+    </enum>
+
+    <enum name="TradingSessionStatusType" encodingType="NumericEncodingType"
+        description="Defines the state of the trading session.">
+        <validValue name="Pre_Trading">1</validValue>
+        <validValue name="Opening">2</validValue>
+        <validValue name="Trading">3</validValue>
+        <validValue name="Post_Trading">4</validValue>
+        <validValue name="Closed">5</validValue>
+    </enum>
+
+    <!-- sets -->
+
+    <set name="ExecInstType" encodingType="uint16"
+        description="Enable an execution instruction by setting a bit, disable an execution instruction by clearing the bit.
+                     Note: ParticipateDoNotInitiate is for Post Only.">
+        <choice name="ParticipateDoNotInitiate">0</choice>
+        <choice name="AllOrNone">1</choice>
+        <choice name="IntermarketSweep">2</choice>
+        <choice name="ExternalRoutingAllowed">3</choice>
+        <choice name="TrdAtRefPx">4</choice>
+    </set> <!-- Note TrdAtRefPx is not exactly standard FIX -->
+
+    <!-- Composites -->
+
+    <composite name="PriceType">
+        <type name="mantissa" primitiveType="int64"
+            description="The scaled decimal representing the price."/>
+        <type name="exponent" primitiveType="int8" presence="constant"
+            description="The number of decimal places to move the decimal point to the left.">-4
+        </type>
+    </composite>
+
+    <composite name="UTCTimestampNanos" description="UTC timestamp with nanosecond precision">
+        <type name="time" primitiveType="uint64" />
+        <type name="unit" primitiveType="uint8" presence="constant" valueRef="TimeUnitType.nanosecond" />
+    </composite>
+
+</types>
+
